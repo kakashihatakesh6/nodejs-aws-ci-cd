@@ -3,7 +3,7 @@ name: Deploy Node.js Server
 on:
   push:
     branches:
-      - main  # Change to your branch if needed
+      - main  # Runs when code is pushed to the main branch
 
 jobs:
   deploy:
@@ -18,13 +18,14 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 43.205.25.203 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 13.200.51.135 >> ~/.ssh/known_hosts
 
       - name: Deploy to AWS
         run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@43.205.25.203 << 'EOF'
-            cd /home/ubuntu/my-app
+          ssh -i ~/.ssh/id_rsa ubuntu@13.200.51.135 << 'EOF'
+            cd /var/www/express-server
             git pull origin main
             npm install
             pm2 restart my-app
           EOF
+
