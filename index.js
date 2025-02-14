@@ -6,11 +6,11 @@ app.use(express.json());
 
 app.listen(port, () => {
     console.log("Server is running on ", port); 
-})
+})  
 
 const productList = [
 {
-    id: "340xHt304YU35",
+    id: "340xHt3404YU35",
     name: "Samsung Galaxy S-25",
     storage: "128GB",
     ram: "8GB",

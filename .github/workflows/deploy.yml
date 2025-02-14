@@ -16,16 +16,18 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 13.200.51.135 >> ~/.ssh/known_hosts
 
       - name: Deploy to AWS
         run: |
           ssh -i ~/.ssh/id_rsa ubuntu@13.200.51.135 << 'EOF'
-            cd /var/www/express-server
-            git pull origin main
-            npm install
-            pm2 restart my-app
+            sudo su  # Switch to root user (if needed)
+            cd /var/www/express-server  # Change to the project directory
+            sudo git pull origin main  # Pull latest changes
+            sudo npm install  # Install dependencies
+            sudo pm2 restart my-app  # Restart the application
           EOF
+
 
