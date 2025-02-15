@@ -18,7 +18,7 @@ const productList = [
 },
 {
     id: "xYH45hg3703H",
-    name: "Real me 14 pro",
+    name: "Real me 14 pro max",
     storage: "128 GB",
     ram: "8 GB",
     description: "latest realme phone"
