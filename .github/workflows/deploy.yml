@@ -27,5 +27,9 @@ jobs:
             cd /home/ubuntu/hnode-app  # Change to the project directory
             sudo git pull origin main  # Pull latest changes
             sudo npm install  # Install dependencies
-            sudo pm2 restart my-app  # Restart the application
+            if pm2 describe my-app > /dev/null; then
+              sudo pm2 restart my-app  # Restart the application if it is running
+            else
+              sudo pm2 start index.js --name my-app  # Start the application if it is not running
+            fi
           EOF
