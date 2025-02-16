@@ -10,7 +10,7 @@ app.listen(port, () => {
 
 const productList = [
 {
-    id: "340xHt3404YU35U",
+    id: "340xHt3404YU35AU",
     name: "Samsung Galaxy S-25",
     storage: "128GB",
     ram: "8GB",
