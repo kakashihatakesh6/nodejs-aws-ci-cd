@@ -1,0 +1,34 @@
+name: Deploy Node.js Server
+
+on:
+  push:
+    branches:
+      - main  # Runs when code is pushed to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 13.201.165.54 >> ~/.ssh/known_hosts
+
+      - name: Deploy to AWS
+        run: |
+          ssh -i ~/.ssh/id_rsa ubuntu@13.201.165.54 << 'EOF'
+            cd /home/ubuntu/hnode-app  # Change to the project directory
+            git pull origin main  # Pull latest changes
+            sudo npm install  # Install dependencies
+            if pm2 describe my-app > /dev/null; then
+              pm2 restart my-app  # Restart the application if it is running
+            else
+              pm2 start index.js --name my-app  # Start the application if it is not running
+            fi
+          EOF
