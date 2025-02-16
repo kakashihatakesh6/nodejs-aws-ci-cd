@@ -18,11 +18,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 13.203.168.95 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 13.201.165.54 >> ~/.ssh/known_hosts
 
       - name: Deploy to AWS
         run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@13.203.168.95 << 'EOF'
+          ssh -i ~/.ssh/id_rsa ubuntu@13.201.165.54 << 'EOF'
             sudo su  # Switch to root user (if needed)
             cd /home/ubuntu/hnode-app  # Change to the project directory
             sudo git pull origin main  # Pull latest changes
